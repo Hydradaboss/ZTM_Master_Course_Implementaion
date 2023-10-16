@@ -5,7 +5,7 @@ import path from "path";
 import {dirname} from "path";
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
-const habitablePlanets = [];
+const getHabitablePlanets = [];
 
 function isHabitablePlanet(planet) {
   return (
@@ -27,7 +27,7 @@ function loadPlanetsData() {
       )
       .on("data", (data) => {
         if (isHabitablePlanet(data)) {
-          habitablePlanets.push(data);
+          getHabitablePlanets.push(data);
         }
       })
       .on("error", (err) => {
@@ -35,9 +35,9 @@ function loadPlanetsData() {
         reject(err);
       })
       .on("end", () => {
-        console.log(`${habitablePlanets.length} habitable planets found!`);
+        console.log(`${getHabitablePlanets.length} habitable planets found!`);
         resolve();
       });
   });
 }
-export { habitablePlanets,loadPlanetsData };
+export { getHabitablePlanets, loadPlanetsData };

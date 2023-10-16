@@ -2,7 +2,7 @@ import express from "express"
 import cors from "cors"
 import morgan from "morgan"
 import planetRouter from "./routes/planets.router.js"
-import launchsRouter from "./routes/lauchs.router.js";
+import launchsRouter from "./routes/launchs.router.js";
 
 const app = express();
 app.use(cors());

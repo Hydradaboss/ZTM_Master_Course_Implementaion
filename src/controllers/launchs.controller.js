@@ -1,7 +1,7 @@
 import {launchs, CreateNewLaunch, DeleteLaunch, DoesIdExist} from "../models/launchs.model.js"
 
 export const HttpGetAllLauches = async (req, res)=>{
-    return res.status().json(launchs)
+    return res.status(200).json(launchs)
 }
 
 export const HttpCreateLaunch = async (req, res) => {
@@ -13,7 +13,7 @@ export const HttpCreateLaunch = async (req, res) => {
    }
    Launch.LaunchDate = new Date(Launch.LaunchDate)
    if(isNaN(Launch.LaunchDate)){
-    return res.status().json({
+    return res.status(400).json({
         error:"Date is not correct"
     })
    }

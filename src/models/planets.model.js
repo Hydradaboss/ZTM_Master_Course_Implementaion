@@ -1,10 +1,9 @@
 import { parse } from "csv-parse";
 import fs from "fs";
-import { fileURLToPath } from "url";
 import path from "path";
-import {dirname} from "path";
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
+
+const __filename = process.argv[1];
+const __dirname = path.dirname(__filename);
 const getHabitablePlanets = [];
 
 function isHabitablePlanet(planet) {
@@ -18,7 +17,7 @@ function isHabitablePlanet(planet) {
 
 function loadPlanetsData() {
   return new Promise((resolve, reject) => {
-    fs.createReadStream(path.join(__dirname,"..","data","kepler_data.csv"))
+    fs.createReadStream(path.join(__dirname, "..", "data", "kepler_data.csv"))
       .pipe(
         parse({
           comment: "#",
@@ -40,4 +39,5 @@ function loadPlanetsData() {
       });
   });
 }
+
 export { getHabitablePlanets, loadPlanetsData };

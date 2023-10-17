@@ -1,4 +1,5 @@
 export const launchs = new Map();
+let latestFlightNumber = 100
 const launch = {
   FlightNumber: 100,
   Mission: "Kepler Space Exploration",

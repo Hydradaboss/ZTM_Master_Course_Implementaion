@@ -5,6 +5,7 @@ import planetRouter from "./routes/planets.router.js"
 import launchsRouter from "./routes/launchs.router.js";
 
 const app = express();
+app.use(express.json())
 app.use(cors());
 app.use(morgan("combined"))
 app.use("/planet", planetRouter)

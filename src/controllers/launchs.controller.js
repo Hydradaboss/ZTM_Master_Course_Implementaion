@@ -5,8 +5,9 @@ export const HttpGetAllLauches = async (req, res)=>{
 }
 
 export const HttpCreateLaunch = async (req, res) => {
-   const Launch =  req.body
-   if( !Launch.Mission || !Launch.Rocket || !Launch.LaunchDate || !Launch.Destination){
+   const {Mission, Rocket, LaunchDate, Destination} =  req.body
+   const Launch = {Mission,Rocket, LaunchDate, Destination}
+   if(  !Launch.Mission || !Launch.Rocket || !Launch.LaunchDate || !Launch.Destination){
     return res.status(400).json({
         error: "Missing Required Parameters"
     })
@@ -17,8 +18,8 @@ export const HttpCreateLaunch = async (req, res) => {
         error:"Date is not correct"
     })
    }
-   const createdLauch = CreateNewLaunch(Launch)
-   return res.status(201).json(createdLauch)
+   CreateNewLaunch(Launch)
+   return res.status(201).json(Launch)
 }
 
 export const HttpDeleteLaunch = async ( req, res) => {

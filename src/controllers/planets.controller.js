@@ -1,4 +1,4 @@
-import  getHabitablePlanets from "../models/planets.model.js";
+import  {getHabitablePlanets} from "../models/planets.model.js";
 
 const planet = getHabitablePlanets
 export const HttpGetAllPlanets = (req, res) => {

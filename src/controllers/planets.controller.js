@@ -1,6 +1,4 @@
-import  {getHabitablePlanets} from "../models/planets.model.js";
-
-const planet = getHabitablePlanets
-export const HttpGetAllPlanets = (req, res) => {
-  return res.status(200).json(planet);
+import  {getallPlanets } from "../models/planets.model.js";
+export const HttpGetAllPlanets = async(req, res) => {
+  return res.status(200).json(await getallPlanets());
 };

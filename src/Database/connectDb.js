@@ -7,8 +7,5 @@ export const connectDb = (url) => {
   mongoose.connection.on("error", (error) => {
     console.error(error);
   });
-  return mongoose.connect(url, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+  return mongoose.connect(url);
 };

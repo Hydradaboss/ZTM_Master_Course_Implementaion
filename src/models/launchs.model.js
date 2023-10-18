@@ -10,6 +10,8 @@ const launch = {
   Upcoming: true,
   Sucess: true,
 };
+
+
 launchs.set(launch.FlightNumber, launch);
 export const getAllLauches = () => {
   return Array.from(launchs.values());

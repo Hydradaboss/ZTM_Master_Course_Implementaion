@@ -1,9 +1,13 @@
 import http from "http";
-import { loadPlanetsData } from "./models/planets.model.js";
 import app from "./apps.js";
-const PORT = 3000
+import { loadPlanetsData } from "./models/planets.model.js";
+import { connectDb } from "./Database/connectDb.js";
+import "dotenv/config.js"
+
+
 const server = http.createServer(app);
 await loadPlanetsData()
-server.listen(PORT,()=>{
+await connectDb(process.env.MONGO_url);
+server.listen(process.env.PORT,()=>{
     console.log("connected on port 3000")
 });

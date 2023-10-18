@@ -14,6 +14,13 @@ describe("Test Post Launchs", () => {
     Destination: "Kepler-422 b",
     LaunchDate: "January 4, 2029",
   };
+
+  const completeDataWithInvalidDate = {
+    Mission: "Kepler Space Exploration",
+    Rocket: "Explorer IS1",
+    Destination: "Kepler-422 b",
+    LaunchDate: "None",
+  };
   const completeDataWithoutDate = {
     Mission: "Kepler Space Exploration",
     Rocket: "Explorer IS1",
@@ -26,7 +33,17 @@ describe("Test Post Launchs", () => {
     expect(responseDate).toBe(requestDate);
     expect(response.body).toMatchObject(completeDataWithoutDate);
   });
-  test("it should catch missing propertise", () => {});
+  test("it should catch missing propertise", async () => {
+    const response = await request(app).post("/launch").send(completeDataWithoutDate).expect(400)
+    expect(response.body).toStrictEqual({
+      error: "Missing Required Parameters"
+    });
+  });
 
-  test("it should catch invalid dates", () => {});
+  test("it should catch invalid dates", async () => {
+     const response = await request(app).post("/launch").send(completeDataWithInvalidDate).expect(400)
+    expect(response.body).toStrictEqual({
+      error: "Date is not correct"
+    });
+  });
 });

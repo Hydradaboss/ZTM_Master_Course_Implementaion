@@ -1,12 +1,10 @@
 import { parse } from "csv-parse";
 import fs from "fs";
 import path from "path";
-import {planetModel} from "./planets.mongo.js";
-import { constants } from "buffer";
+import { planetModel } from "./planets.mongo.js";
 
 const __filename = process.argv[1];
 const __dirname = path.dirname(__filename);
-
 
 function isHabitablePlanet(planet) {
   return (
@@ -25,27 +23,24 @@ export function loadPlanetsData() {
           comment: "#",
           columns: true,
         })
-
       )
       .on("data", async (data) => {
         if (isHabitablePlanet(data)) {
-          await upsert(data)
-          console.log(data)
+          await upsert(data);
         }
       })
       .on("error", (err) => {
         console.log(err);
         reject(err);
       })
-      .on("end", async() => {
+      .on("end", async () => {
         console.log("habitable planets found!");
         resolve();
-      })
+      });
   });
 }
 
-
-const upsert = async (data)=>{
+const upsert = async (data) => {
   await planetModel.updateOne(
     {
       Name: data.kepler_name,
@@ -54,11 +49,17 @@ const upsert = async (data)=>{
       Name: data.kepler_name,
     },
     {
-      upsert:true
+      upsert: true,
     }
   );
-}
+};
 
 export const getallPlanets = async () => {
-  return await planetModel.find({}); 
+  return await planetModel.find(
+    {},
+    {
+      _id: 0,
+      __v: 0,
+    }
+  );
 };

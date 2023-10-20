@@ -34,7 +34,7 @@ export const HttpCreateLaunch = async (req, res) => {
 
 export const HttpDeleteLaunch = async (req, res) => {
   const LaunchId = req.params.id;
-  if (!DoesIdExist(LaunchId)) {
+  if (!(await DoesIdExist(LaunchId))) {
     return res.status(400).json({
       error: "launch not found",
     });

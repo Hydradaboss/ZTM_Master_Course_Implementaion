@@ -6,7 +6,7 @@ import {
 } from "../models/launchs.model.js";
 
 export const HttpGetAllLauches = async (req, res) => {
-  return res.status(200).json(getAllLauches);
+  return res.status(200).json(await getAllLauches());
 };
 
 export const HttpCreateLaunch = async (req, res) => {
@@ -28,7 +28,7 @@ export const HttpCreateLaunch = async (req, res) => {
       error: "Date is not correct",
     });
   }
-  CreateNewLaunch(Launch);
+  await CreateNewLaunch(Launch);
   return res.status(201).json(Launch);
 };
 
@@ -39,6 +39,6 @@ export const HttpDeleteLaunch = async (req, res) => {
       error: "launch not found",
     });
   }
-  const aborted = DeleteLaunch(LaunchId);
+  const aborted = await DeleteLaunch(LaunchId);
   return res.status(200).json(aborted);
 };

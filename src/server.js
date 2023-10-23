@@ -5,14 +5,16 @@ import { connectDb } from "./Database/connectDb.js";
 import "dotenv/config.js";
 
 const server = http.createServer(app);
-await loadPlanetsData();
 const start = async () => {
   try {
+    await loadPlanetsData();
     await connectDb(process.env.MONGO_URL);
     server.listen(process.env.PORT, () => {
       console.log("connected on port 3000");
     });
-  } catch (error) {}
+  } catch (error) {
+    console.log(error)
+  }
 };
 
 start()

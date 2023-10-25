@@ -7,9 +7,9 @@ import {loadLauchData} from "./models/launchs.model.js"
 const server = http.createServer(app);
 const start = async () => {
   try {
+    await connectDb(process.env.MONGO_URL);
     await loadPlanetsData();
     await loadLauchData()
-    await connectDb(process.env.MONGO_URL);
     server.listen(process.env.PORT, () => {
       console.log("connected on port 3000");
     });

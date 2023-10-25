@@ -96,7 +96,7 @@ export const loadLauchData = async () => {
       const customer = payloads.flatMap((payload) => {
         return payload["customers"];
       });
-      const spacexLaunch = {
+      const loadedLaunch = {
         FlightNumber: launchdoc["flight_number"],
         Mission: launchdoc["name"],
         Rocket: launchdoc["rocket"]["name"],
@@ -105,7 +105,7 @@ export const loadLauchData = async () => {
         Success: launchdoc["success"],
         Customers: customer,
       };
-      console.log(customer);
+      await SaveLaunch(loadedLaunch)
     }
   } catch (error) {
     console.log(error);

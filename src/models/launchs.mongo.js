@@ -4,7 +4,6 @@ const LaunchSchema = new mongoose.Schema({
   FlightNumber: {
     type: String,
     required: true,
-    default: 100,
   },
   Mission: {
     type: String,
@@ -19,8 +18,7 @@ const LaunchSchema = new mongoose.Schema({
     required: true,
   },
   Destination: {
-    type: String,
-    required: true,
+    type: String
   },
   Customers: {
     type: Array,

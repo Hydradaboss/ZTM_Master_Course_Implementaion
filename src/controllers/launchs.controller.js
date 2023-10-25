@@ -5,8 +5,11 @@ import {
   DoesIdExist,
 } from "../models/launchs.model.js";
 
+import { getPag } from "../services/pagination.js";
+
 export const HttpGetAllLauches = async (req, res) => {
-  return res.status(200).json(await getAllLauches());
+  const {skip, limit} = getPag(req.query)
+  return res.status(200).json(await getAllLauches(skip, limit));
 };
 
 export const HttpCreateLaunch = async (req, res) => {

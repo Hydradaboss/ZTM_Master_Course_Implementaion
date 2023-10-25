@@ -16,8 +16,11 @@ async function SaveLaunch(Launch) {
   );
 }
 
-export const getAllLauches = async () => {
-  return await LaunchModel.find({}, { _id: 0, __v: 0 });
+export const getAllLauches = async (skip, limit) => {
+  return await LaunchModel.find({}, { _id: 0, __v: 0 })
+    .sort({ FlightNumber: 1 })
+    .skip(skip)
+    .limit(limit);
 };
 
 export const CreateNewLaunch = async (Launch) => {
@@ -70,42 +73,52 @@ export const DoesIdExist = async (LaunchId) => {
 
 export const loadLauchData = async () => {
   try {
-    const response = await axios.post(
-      "https://api.spacexdata.com/v4/launches/query",
-      {
-        query: {},
-        options: {
-          populate: [{
-            path:"rocket",
-            select:{
-              name:1 
-            }},
-            {
-              path:"payloads",
-            select:{
-              customers: 1
-            }
-            }
-          ],
-        },
+    const filtered = await findLaunchs({
+      FlightNumber: 1,
+    });
+    if (filtered) {
+      console.log("exists");
+    } else {
+      const response = await axios.post(
+        "https://api.spacexdata.com/v4/launches/query",
+        {
+          query: {},
+          options: {
+            pagination: false,
+            populate: [
+              {
+                path: "rocket",
+                select: {
+                  name: 1,
+                },
+              },
+              {
+                path: "payloads",
+                select: {
+                  customers: 1,
+                },
+              },
+            ],
+          },
+        }
+      );
+      const launchdocs = response.data.docs;
+      for (const launchdoc of launchdocs) {
+        const payloads = launchdoc["payloads"];
+        const customer = payloads.flatMap((payload) => {
+          return payload["customers"];
+        });
+        const loadedLaunch = {
+          FlightNumber: launchdoc["flight_number"],
+          Mission: launchdoc["name"],
+          Rocket: launchdoc["rocket"]["name"],
+          Upcoming: launchdoc["upcoming"],
+          LaunchDate: launchdoc["date_local"],
+          Success: launchdoc["success"],
+          Customers: customer,
+        };
+        await SaveLaunch(loadedLaunch);
       }
-    );
-    const launchdocs = response.data.docs;
-    for (const launchdoc of launchdocs) {
-      const payloads = launchdoc["payloads"];
-      const customer = payloads.flatMap((payload) => {
-        return payload["customers"];
-      });
-      const loadedLaunch = {
-        FlightNumber: launchdoc["flight_number"],
-        Mission: launchdoc["name"],
-        Rocket: launchdoc["rocket"]["name"],
-        Upcoming: launchdoc["upcoming"],
-        LaunchDate: launchdoc["date_local"],
-        Success: launchdoc["success"],
-        Customers: customer,
-      };
-      await SaveLaunch(loadedLaunch)
     }
   } catch (error) {
     console.log(error);

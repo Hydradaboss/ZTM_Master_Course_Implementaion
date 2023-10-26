@@ -25,7 +25,7 @@ export const getAllLauches = async (skip, limit) => {
 
 export const CreateNewLaunch = async (Launch) => {
   const existingPlanet = await planetModel.findOne({
-    KeplerName: Launch.Destination,
+    Name: Launch.Destination,
   });
   if (!existingPlanet) {
     throw new Error("No destination planet found");

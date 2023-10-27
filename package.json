@@ -26,6 +26,8 @@
     "pm2": "^5.3.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.23.2",
+    "@babel/plugin-syntax-import-meta": "^7.10.4",
     "@babel/plugin-transform-modules-commonjs": "^7.23.0",
     "@babel/preset-env": "^7.23.2",
     "babel-jest": "^29.7.0",

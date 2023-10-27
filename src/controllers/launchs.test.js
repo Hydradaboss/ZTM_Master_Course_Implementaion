@@ -6,8 +6,8 @@ import "dotenv/config.js"
 describe(" test all", ()=>{
   beforeAll(async ()=>{
     const url = process.env.MONGO_URL
-    await loadPlanetsData()
     await connectDb(url)
+    await loadPlanetsData();
   })
   describe("Test Get Launchs", () => {
     test("it should respond with 200", async () => {

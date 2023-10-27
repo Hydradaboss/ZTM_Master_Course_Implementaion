@@ -1,15 +1,16 @@
 import request from "supertest";
 import app from "../apps.js";
-import { connectDb } from "../services/connectDb.js";
-import { loadPlanetsData } from "../models/planets.model.js";
+import { connectDb, disconnectDb } from "../services/connectDb.js";
 import "dotenv/config.js";
 describe(" test all", () => {
   beforeAll(async () => {
     const url = process.env.MONGO_URL;
     await connectDb(url);
-    //await loadPlanetsData();
   });
 
+  afterAll(async()=>{
+    await disconnectDb()
+  })
   describe("Test Get Launchs", () => {
     test("it should respond with 200", async () => {
       await request(app).get("/launch").expect(200);

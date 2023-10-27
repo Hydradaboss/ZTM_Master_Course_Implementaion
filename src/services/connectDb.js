@@ -9,3 +9,7 @@ export const connectDb = (url) => {
   });
   return mongoose.connect(url);
 };
+
+export const disconnectDb = () => {
+  return mongoose.disconnect()
+}

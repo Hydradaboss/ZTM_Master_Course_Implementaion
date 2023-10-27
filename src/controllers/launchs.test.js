@@ -1,12 +1,13 @@
 import request from "supertest";
 import app from "../apps.js";
 import { connectDb } from "../services/connectDb.js";
+import { loadPlanetsData } from "../models/planets.model.js";
 import "dotenv/config.js"
 
 describe(" test all", ()=>{
   beforeAll(async ()=>{
     const url = process.env.MONGO_URL
-    console.log(url)
+    await loadPlanetsData()
     await connectDb(url)
   })
   describe("Test Get Launchs", () => {

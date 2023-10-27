@@ -7,7 +7,6 @@ on:
 jobs:
   build:
     env:
-      MONGO_URL: mongodb://localhost/nasa
       CI: true
     strategy:
       matrix:
@@ -20,5 +19,9 @@ jobs:
           node-version: ${{ matrix.node-version}}
       - run: npm install
       - name: MongoDB in GitHub Actions
-        uses: supercharge/mongodb-github-action@v1.10.0      
+        uses: supercharge/mongodb-github-action@v1.10.0   
+      - name: Set MONGO_URL environment variable
+        env:
+          MONGO_URL: ${{ secrets.MONGO_URL }}
+            run: echo "MONGO_URL=$MONGO_URL" >> $GITHUB_ENV   
       - run: npm run test

@@ -7,7 +7,7 @@ on:
 jobs:
   build:
     env:
-      MONGO_URL: mongodbd://localhost/nasa
+      MONGO_URL: mongodb://localhost/nasa
       CI: true
     strategy:
       matrix:
